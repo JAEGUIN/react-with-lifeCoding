@@ -2,17 +2,20 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const topics = [
-    {id:1, title:'aa', body:'aa is aa'},
-    {id:2, title:'bb', body:'bb is bb'},
-    {id:3, title:'cc', body:'cc is cc'}
-  ]
+  const mode = 'read';
+  let content = null;
+  if(mode === 'welcome'){
+    content = <Article title="welcome" body="hi, jaeguin"></Article>
+  }else if(mode === 'read'){
+    content = <Article title="read" body="read, jaeguin"></Article>
+  }
   return (
     <div className="App">
       <Header title="react study with jaeguin" onChangeMode={function(){
         alert('jaeguin clicked');
       }}></Header>
-      <Article topics={topics}></Article>
+      {/* <Article topics={topics}></Article> */}
+      {content}
     </div>
   );
 }
@@ -26,18 +29,17 @@ function Header(props){
   </header>
 }
 function Article(props){
-  const lis = []
-  for(let i=0; i<props.topics.length; i++){
-    let t = props.topics[i];
-    lis.push(<li key={t.id}><a href={'/read/'+t.id}>{t.title}</a></li>)
-  }
   return <article>
-    <div>
-        <p>
-          {props.title}
-        </p>
+    <div>        
         <img src={logo} className="App-logo" alt="logo" />
         
+        <h1>
+          {props.title}
+        </h1>
+        <h3>
+          {props.body}
+        </h3>
+
         <a
           className="App-link"
           href="https://github.com/JAEGUIN"
@@ -46,9 +48,7 @@ function Article(props){
         >
           {props.body}
         </a>
-        <p>
-          {lis}
-        </p>
+
     </div>
   </article>
 }
