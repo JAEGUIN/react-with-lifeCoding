@@ -23,7 +23,7 @@ function Nav(props){
     lis.push(<li key={t.id}>
       <a id={t.id} href={'/read/'+t.id} onClick={event=>{
         event.preventDefault();
-        props.onChangeMode(event.target.id);
+        props.onChangeMode(Number(event.target.id));
       }}>{t.title}</a>
     </li>)
   }
@@ -40,16 +40,26 @@ function App() {
   // const setMode = _mode[1];
   //setMode로 앱 컴포넌트가 다시 실행됨
   const[mode, setMode] = useState('welcome');
+  const[id, setId] = useState(null);
   const topics = [
     {id:1, title:'html', body:'html is ...'},
     {id:2, title:'css', body:'css is ...'},
-    {id:3, title:'javascript', body:'javascript is ...'}
+    {id:3, title:'javascript', body:'javascript is ...'},
+    {id:4, title:'jaeguin', body:'jaeguin is ...'}
   ] 
   let content = null;
   if(mode === 'welcome'){
     content = <Article title='welcome' body='hi jaeguin'></Article>
   }else if(mode === 'read'){
-    content = <Article title='read' body='read jaeguin'></Article>
+    let title, body = null;
+    for(let i=0; i<topics.length; i++){
+      console.log(topics[i].id, id);
+      if(topics[i].id === id){
+        title = topics[i].title;
+        body = topics[i].body;
+      }
+    }
+    content = <Article title={title} body={body}></Article>
   }
   return (
     <div>
@@ -57,9 +67,10 @@ function App() {
         // alert('Header');
         setMode('welcome');
       }}></Header>
-      <Nav topics={topics} onChangeMode={(id)=>{
+      <Nav topics={topics} onChangeMode={(_id)=>{
         // alert(id);
         setMode('read');
+        setId(_id);
       }}></Nav>
       {/* <Article title="Welcome" body="Hello, JAEGUIN"></Article> */}
       {content}
