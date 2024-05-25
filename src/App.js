@@ -1,56 +1,54 @@
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  const mode = 'read';
-  let content = null;
-  if(mode === 'welcome'){
-    content = <Article title="welcome" body="hi, jaeguin"></Article>
-  }else if(mode === 'read'){
-    content = <Article title="read" body="read, jaeguin"></Article>
-  }
-  return (
-    <div className="App">
-      <Header title="react study with jaeguin" onChangeMode={function(){
-        alert('jaeguin clicked');
-      }}></Header>
-      {/* <Article topics={topics}></Article> */}
-      {content}
-    </div>
-  );
-}
-function Header(props){
-  console.log('props', props, props.title)
-  return <header>
-    <h1><a href='/' onClick={function(event){
-      event.preventDefault();
-      props.onChangeMode();
-    }}>{props.title}</a>    </h1>
-  </header>
-}
+
 function Article(props){
   return <article>
-    <div>        
-        <img src={logo} className="App-logo" alt="logo" />
-        
-        <h1>
-          {props.title}
-        </h1>
-        <h3>
-          {props.body}
-        </h3>
-
-        <a
-          className="App-link"
-          href="https://github.com/JAEGUIN"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {props.body}
-        </a>
-
-    </div>
+    <h2>{props.title}</h2>
+    {props.body}
   </article>
+}
+function Header(props){
+  return <header>
+    <h1><a href="/" onClick={(event)=>{
+      event.preventDefault();
+      props.onChangeMode();
+    }}>{props.title}</a></h1>
+  </header>
+}
+function Nav(props){
+  const lis = []
+  for(let i=0; i<props.topics.length; i++){
+    let t = props.topics[i];
+    lis.push(<li key={t.id}>
+      <a id={t.id} href={'/read/'+t.id} onClick={event=>{
+        event.preventDefault();
+        props.onChangeMode(event.target.id);
+      }}>{t.title}</a>
+    </li>)
+  }
+  return <nav>
+    <ol>
+      {lis}
+    </ol>
+  </nav>
+}
+function App() {
+  const topics = [
+    {id:1, title:'html', body:'html is ...'},
+    {id:2, title:'css', body:'css is ...'},
+    {id:3, title:'javascript', body:'javascript is ...'}
+  ] 
+  return (
+    <div>
+      <Header title="WEB" onChangeMode={()=>{
+        alert('Header');
+      }}></Header>
+      <Nav topics={topics} onChangeMode={(id)=>{
+        alert(id);
+      }}></Nav>
+      <Article title="Welcome" body="Hello, JAEGUIN"></Article>
+    </div>
+  );
 }
 
 export default App;
