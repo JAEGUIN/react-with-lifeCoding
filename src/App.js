@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 
 
@@ -33,20 +34,35 @@ function Nav(props){
   </nav>
 }
 function App() {
+  // const _mode = useState('welcome');
+  // console.log('_mode : ',_mode);
+  // const mode = _mode[0];
+  // const setMode = _mode[1];
+  //setMode로 앱 컴포넌트가 다시 실행됨
+  const[mode, setMode] = useState('welcome');
   const topics = [
     {id:1, title:'html', body:'html is ...'},
     {id:2, title:'css', body:'css is ...'},
     {id:3, title:'javascript', body:'javascript is ...'}
   ] 
+  let content = null;
+  if(mode === 'welcome'){
+    content = <Article title='welcome' body='hi jaeguin'></Article>
+  }else if(mode === 'read'){
+    content = <Article title='read' body='read jaeguin'></Article>
+  }
   return (
     <div>
       <Header title="WEB" onChangeMode={()=>{
-        alert('Header');
+        // alert('Header');
+        setMode('welcome');
       }}></Header>
       <Nav topics={topics} onChangeMode={(id)=>{
-        alert(id);
+        // alert(id);
+        setMode('read');
       }}></Nav>
-      <Article title="Welcome" body="Hello, JAEGUIN"></Article>
+      {/* <Article title="Welcome" body="Hello, JAEGUIN"></Article> */}
+      {content}
     </div>
   );
 }
