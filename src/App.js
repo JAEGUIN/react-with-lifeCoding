@@ -9,7 +9,9 @@ function App() {
   ]
   return (
     <div className="App">
-      <Header title="react study with jaeguin"></Header>
+      <Header title="react study with jaeguin" onChangeMode={function(){
+        alert('jaeguin clicked');
+      }}></Header>
       <Article topics={topics}></Article>
     </div>
   );
@@ -17,7 +19,10 @@ function App() {
 function Header(props){
   console.log('props', props, props.title)
   return <header>
-    <h1><a href='/'>{props.title}</a>    </h1>
+    <h1><a href='/' onClick={function(event){
+      event.preventDefault();
+      props.onChangeMode();
+    }}>{props.title}</a>    </h1>
   </header>
 }
 function Article(props){
